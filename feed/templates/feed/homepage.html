@@ -3,5 +3,9 @@
 {% block title %}Title{%endblock%}
 
 {% block body %}
-<h1>Hi</h1>
+    {% for item in posts %}
+        <h1>{{item.text}}</h1>
+        <p>{{item.date}}</p>
+        <hr>
+    {% endfor %}
 {%endblock%}
