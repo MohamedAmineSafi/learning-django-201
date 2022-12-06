@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'profiles',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
