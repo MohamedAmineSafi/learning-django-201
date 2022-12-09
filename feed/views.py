@@ -1,6 +1,7 @@
 # from django.shortcuts import render NOT USING FUNCTION BASED VIEW
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post
 
 # Create your views here.
@@ -17,7 +18,7 @@ class PostDetailView(DetailView):
     model = Post
     context_object_name = 'post' #default is 'object' so instead of {{object.text}} use {{post.text}}
 
-class CreateNewPost(CreateView):
+class CreateNewPost(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "feed/create.html"
     fields = ['text']
