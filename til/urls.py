@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include
 from django.urls import re_path #!IMPORTANT 'url' was discontinued in django 4 use re_path instead
 from feed import urls as feed_urls
+from profiles import urls as profile_urls
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,5 +26,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(feed_urls, namespace='feed')),
+    path('profile/', include(profile_urls, namespace='profiles')),
     re_path('', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
