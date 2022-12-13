@@ -3,7 +3,9 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.views.generic import TemplateView
 from .models import Post
+from django.db import connection
 
 # Create your views here.
 class HomePage(ListView):
@@ -50,3 +52,26 @@ class CreateNewPost(LoginRequiredMixin, CreateView):
             },
             content_type = "application/html",
         )
+
+class MyPosts(LoginRequiredMixin, TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #------------------------------
+        loggedInUserID = self.request.user.id
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM feed_post WHERE author_id=%s', [loggedInUserID])
+        rows = cursor.fetchall()
+        context['rows'] = rows
+
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM allauth.socialaccount_emailAddress')
+        rows = cursor.fetchall()
+        print("000000000000000000")
+        print(rows)
+        #------------------------------
+        return context
+
+    template_name = 'feed/myPosts.html'
