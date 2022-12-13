@@ -29,7 +29,7 @@
     {% if request.user != user %}
     {% if request.user.is_authenticated %}
     <div class="text-center pb-3">
-      <button data-username="{{user.username}}" class="js-follow text-sm bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-1 px-3 mt-4 inline-flex items-center" type="button">
+      <button data-action="follow" data-url="{% url 'profiles:follow' user.username %}" data-username="{{user.username}}" class="js-follow text-sm bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-1 px-3 mt-4 inline-flex items-center" type="button">
         <span class="mr-2 js-follow-text">Follow</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
