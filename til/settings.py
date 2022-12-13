@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'feed',
+    'followers',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
