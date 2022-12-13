@@ -16,9 +16,26 @@ class ProfileDetailView(DetailView):
     slug_field = 'username'
     slug_url_kwarg = 'username' #from urls.py
 
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
-        user = self.get_object()
+        # user = self.get_object()
+        user = User.objects.get(username=self.kwargs['username'])
         context = super().get_context_data(**kwargs)
+        #------------------------------------------
+        user_from_url = user
+        loggedInUser = self.request.user
+        is_following = Follower.objects.filter(
+            followed_by = loggedInUser,
+            following = user_from_url
+        ).count()
+        if is_following == 0:
+            context['is_following'] = "follow"
+        else:
+            context['is_following'] = "unfollow"
+        #-------------------------------------------
         context['total_posts'] = Post.objects.filter(author=user).count()
         return context
 
